@@ -10,6 +10,8 @@ Standalone Python 3 / FastAPI proof of concept. Upload label images and enter th
 
 Deployed on Render's Free Docker service with Tesseract. Public OCR smoke checks passed; six follow-up warm image uploads took **4.50–5.13 seconds**, with a **4.66-second median**, including HTTP time. This is around the five-second goal, not a latency guarantee. Free instances sleep when idle, so the first request can take 50 seconds or more. See [deployment verification](docs/deployment-verification.md).
 
+**Follow-up consistency check (October 14, 2026):** All 13 fixtures uploaded successfully to both engines. The 12 synthetic fixtures agreed on text-field statuses, but heading-boldness detection and real-photo extraction differed. Render's median response was **4.93 seconds**; the Prosecco photo took **11.19 seconds** and several fields remained uncertain. These results establish a deployment gap to address, not general OCR accuracy. See the [complete comparison and evidence](docs/deployment-consistency-2026-10-14.md).
+
 ## Run locally
 
 Python 3.12+ recommended. From this project folder:
@@ -49,7 +51,7 @@ Twelve reproducible raster test labels and ground-truth application data are inc
 
 A thirteenth case, `samples/prosecco_photo.jpg`, is the user-supplied real bottle photo. `samples/photo_manifest.json` contains illustrative application inputs and expected per-field results. The input brand `PROSECCO` reflects the user's text-comparison test; this is not a claim that Prosecco is the regulatory brand or an actual COLA application. Its unreadable warning must not downgrade the clearly read 11% ABV and 750 mL volume. A captured OCR transcript in `tests/fixtures/prosecco_ocr.json` reproduces that regression without depending on an OCR engine in unit tests. Source webpage was not provided.
 
-The benchmark uses real image bytes, OCR, and comparison rules. It writes `docs/local-benchmark.json`. Its timings exclude HTTP upload and browser/network time; the UI separately measures request-to-response time. Local Apple Vision results do **not** establish Azure Tesseract accuracy or latency. A five-second target must be measured again on the deployed app, with warm/cold requests and representative photos.
+The benchmark uses real image bytes, OCR, and comparison rules. It writes `docs/local-benchmark.json`. Its timings exclude HTTP upload and browser/network time; the UI separately measures request-to-response time. Local Apple Vision results do **not** establish Tesseract accuracy or latency on Render or Azure. The five-second target requires deployed measurements with warm/cold requests and representative photos.
 
 ## Architecture and tools
 
@@ -85,15 +87,19 @@ Run `python scripts/smoke_deployment.py https://alcohol-label-verifier-bhte.onre
 
 ## Optional Azure deployment
 
-An Azure subscription is required; none is configured yet. The included Dockerfile runs Python and Tesseract together so runtime OCR has no external ML endpoint dependency. See [Azure deployment instructions](docs/azure-deployment.md). The Docker image and Azure deployment have not yet been verified on this machine.
+An Azure subscription is required; none is configured yet. The included Dockerfile runs Python and Tesseract together so runtime OCR has no external ML endpoint dependency. See [Azure deployment instructions](docs/azure-deployment.md). The container is deployed on Render; the proposed Azure deployment has not been executed or verified.
 
 ## Next milestones
 
-1. Review UI and run representative real label photos; improve per-field extraction/confidence.
-2. Validate Tesseract parity and deploy to Azure; measure warm and cold end-to-end p50/p95.
-3. Add a batch queue with a CSV application manifest and per-application image association.
-4. Broaden font recognition and body-style coverage, add paragraph-layout checks, and accept reliable artwork dimensions for physical text-size verification.
-5. Measure representative warm/cold latency and improve performance on the deployed service; GitHub publication and initial Render verification are complete.
+These are proposed improvements, not implemented capabilities or promised accuracy gains. GitHub publication and initial Render deployment are complete.
+
+1. **Use the deployed OCR engine as the acceptance baseline.** Expand the dataset with annotated bottle photos, glare, curvature, small text, and multiple label surfaces. Measure per-field extraction accuracy, exact warning transcription, and false matches; compare results on the same container/runtime used for hosting.
+2. **Improve image processing and formatting portability.** Evaluate targeted crops, deskewing, contrast adjustments, and Tesseract settings. Resolve the Linux font-template and OCR-coordinate differences observed in the deployment check. Measure accuracy and runtime together.
+3. **Benchmark a small vision-language model as an optional fallback.** Candidates include Qwen3-VL-2B/4B and image-capable Gemma 3 4B. Compare them with Tesseract and Apple Vision on identical images, including intentionally incorrect warnings. A model must transcribe observed text without receiving the expected application values or warning as hints. Keep deterministic comparisons and Needs review for uncertain evidence; a model's plausible reconstruction must not silently become a compliant warning.
+4. **Choose hosting based on measured requirements.** Render Free provides 512 MB RAM and 0.1 CPU, making these vision-model candidates impractical in the current container. Running a model on a Mac is a local experiment, not an available backend for the public demo. A deployed fallback would require suitable self-hosted compute or a separately evaluated inference service, with an explicit cost and network-access decision. Measure memory use, warm/cold end-to-end latency, and representative p50/p95 before selecting it. A five-second result is a target, not an assumption.
+5. **Extend warning and workflow coverage.** Add paragraph/contrast checks, and physical type-size and character-density checks where reliable artwork dimensions or a scale reference are available. Add a batch queue with a CSV application manifest and per-application image association.
+
+The current app uses pretrained OCR and Python validation rules; it does not run Qwen, Gemma, an LLM, or RAG. RAG could later support cited explanations of beverage-specific guidance, but would not repair missing image characters or replace exact warning validation.
 
 ## References
 
@@ -101,3 +107,6 @@ An Azure subscription is required; none is configured yet. The included Dockerfi
 - [TTB health warning requirements](https://www.ttb.gov/regulated-commodities/beverage-alcohol/distilled-spirits/ds-labeling-home/ds-health-warning)
 - [Tesseract OCR](https://github.com/tesseract-ocr/tesseract)
 - [Apple Vision text recognition](https://developer.apple.com/documentation/vision/recognizing-text-in-images)
+- [Qwen3-VL model documentation](https://github.com/QwenLM/Qwen3-VL)
+- [Gemma 3 model card](https://ai.google.dev/gemma/docs/core/model_card_3)
+- [Render compute-plan specifications](https://render.com/docs/compute-plans)
