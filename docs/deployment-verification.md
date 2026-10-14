@@ -23,6 +23,16 @@ The five-second target is not consistently met on the Free instance; idle startu
 can add 50 seconds or more. Local Apple Vision benchmark results do not establish
 Tesseract accuracy or latency on Render.
 
+## Follow-up warm response-time checks
+
+Three consecutive smoke-check runs uploaded both synthetic labels, producing six
+successful uploads. All matching-field and ABV-mismatch assertions passed.
+HTTP request-to-response times were **4,504–5,133 ms**, with a **4,662 ms median**.
+This supports an approximately five-second response-time goal for these warm
+examples. It does not establish a strict five-second upper bound, representative
+p95, performance on real photos, or idle-startup time. Raw results are in
+[render-warm-timings.json](render-warm-timings.json).
+
 Repeat with:
 
 ```bash

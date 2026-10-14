@@ -6,7 +6,9 @@ Standalone Python 3 / FastAPI proof of concept. Upload label images and enter th
 
 **Source:** https://github.com/aschluo/alcohol-label-verifier
 
-Deployed on Render's Free Docker service with Tesseract. Free instances sleep when idle, so the first request can take 50 seconds or more. Public smoke checks passed on October 13, 2026; two image uploads took approximately 4.8–5.9 seconds including HTTP time. This does not consistently meet the five-second target. See [deployment verification](docs/deployment-verification.md).
+**Brief documentation:** [Approach, tools used, and assumptions](docs/approach.md) — UI rationale, comparison behavior, test-case selection, Azure scope, and the Render response-time goal.
+
+Deployed on Render's Free Docker service with Tesseract. Public OCR smoke checks passed; six follow-up warm image uploads took **4.50–5.13 seconds**, with a **4.66-second median**, including HTTP time. This is around the five-second goal, not a latency guarantee. Free instances sleep when idle, so the first request can take 50 seconds or more. See [deployment verification](docs/deployment-verification.md).
 
 ## Run locally
 

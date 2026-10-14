@@ -1,0 +1,135 @@
+{
+  "scope": "Six sequential HTTP uploads of two synthetic labels after health/page/sample warmup; excludes idle startup. Not representative p95.",
+  "runs": 6,
+  "median_ms": 4662,
+  "min_ms": 4504,
+  "max_ms": 5133,
+  "rows": [
+    {
+      "case": "correct",
+      "status": "needs_review",
+      "elapsed_ms": 5133,
+      "checks": {
+        "brand": "matches",
+        "class_type": "matches",
+        "abv": "matches",
+        "net_contents": "matches",
+        "producer": "matches",
+        "address": "matches",
+        "country": "not_applicable",
+        "warning_text": "matches",
+        "warning_heading": "matches",
+        "warning_bold": "needs_review",
+        "warning_body_style": "needs_review",
+        "warning_format": "needs_review",
+        "warning_size": "needs_review"
+      },
+      "repeat": 1
+    },
+    {
+      "case": "abv_mismatch",
+      "status": "mismatch",
+      "elapsed_ms": 4769,
+      "checks": {
+        "brand": "matches",
+        "class_type": "matches",
+        "abv": "mismatch",
+        "net_contents": "matches",
+        "producer": "matches",
+        "address": "matches",
+        "country": "not_applicable",
+        "warning_text": "matches",
+        "warning_heading": "matches",
+        "warning_bold": "needs_review",
+        "warning_body_style": "needs_review",
+        "warning_format": "needs_review",
+        "warning_size": "needs_review"
+      },
+      "repeat": 1
+    },
+    {
+      "case": "correct",
+      "status": "needs_review",
+      "elapsed_ms": 4722,
+      "checks": {
+        "brand": "matches",
+        "class_type": "matches",
+        "abv": "matches",
+        "net_contents": "matches",
+        "producer": "matches",
+        "address": "matches",
+        "country": "not_applicable",
+        "warning_text": "matches",
+        "warning_heading": "matches",
+        "warning_bold": "needs_review",
+        "warning_body_style": "needs_review",
+        "warning_format": "needs_review",
+        "warning_size": "needs_review"
+      },
+      "repeat": 2
+    },
+    {
+      "case": "abv_mismatch",
+      "status": "mismatch",
+      "elapsed_ms": 4504,
+      "checks": {
+        "brand": "matches",
+        "class_type": "matches",
+        "abv": "mismatch",
+        "net_contents": "matches",
+        "producer": "matches",
+        "address": "matches",
+        "country": "not_applicable",
+        "warning_text": "matches",
+        "warning_heading": "matches",
+        "warning_bold": "needs_review",
+        "warning_body_style": "needs_review",
+        "warning_format": "needs_review",
+        "warning_size": "needs_review"
+      },
+      "repeat": 2
+    },
+    {
+      "case": "correct",
+      "status": "needs_review",
+      "elapsed_ms": 4545,
+      "checks": {
+        "brand": "matches",
+        "class_type": "matches",
+        "abv": "matches",
+        "net_contents": "matches",
+        "producer": "matches",
+        "address": "matches",
+        "country": "not_applicable",
+        "warning_text": "matches",
+        "warning_heading": "matches",
+        "warning_bold": "needs_review",
+        "warning_body_style": "needs_review",
+        "warning_format": "needs_review",
+        "warning_size": "needs_review"
+      },
+      "repeat": 3
+    },
+    {
+      "case": "abv_mismatch",
+      "status": "mismatch",
+      "elapsed_ms": 4602,
+      "checks": {
+        "brand": "matches",
+        "class_type": "matches",
+        "abv": "mismatch",
+        "net_contents": "matches",
+        "producer": "matches",
+        "address": "matches",
+        "country": "not_applicable",
+        "warning_text": "matches",
+        "warning_heading": "matches",
+        "warning_bold": "needs_review",
+        "warning_body_style": "needs_review",
+        "warning_format": "needs_review",
+        "warning_size": "needs_review"
+      },
+      "repeat": 3
+    }
+  ]
+}
