@@ -2,6 +2,12 @@
 
 Standalone Python 3 / FastAPI proof of concept. Upload label images and enter the corresponding application values. Actual machine-learning OCR reads the pixels; deterministic rules compare the text. The app reports Matches, Mismatch, or Needs review with observed text and reasons. No COLA connection or database is required.
 
+**Live demo:** https://alcohol-label-verifier-bhte.onrender.com/
+
+**Source:** https://github.com/aschluo/alcohol-label-verifier
+
+Deployed on Render's Free Docker service with Tesseract. Free instances sleep when idle, so the first request can take 50 seconds or more. Public smoke checks passed on October 13, 2026; two image uploads took approximately 4.8–5.9 seconds including HTTP time. This does not consistently meet the five-second target. See [deployment verification](docs/deployment-verification.md).
+
 ## Run locally
 
 Python 3.12+ recommended. From this project folder:
@@ -73,7 +79,7 @@ Images are processed using temporary files, removed after OCR, and are not retai
 
 The project includes a [Render blueprint](render.yaml) and [deployment and verification instructions](docs/render-deployment.md). Deploy as a **Docker web service** so Tesseract and the font templates are installed. The container binds to `0.0.0.0` and uses Render's `PORT`. No cloud OCR credentials are needed. The blueprint selects the Free plan.
 
-After deployment, run `python scripts/smoke_deployment.py https://YOUR-SERVICE.onrender.com` to verify health, the page, samples, and real OCR uploads. A public deployment URL has not yet been verified. Render's free services sleep after inactivity, so the first request can take about a minute; deployed warm timings must be measured separately from the local benchmark.
+Run `python scripts/smoke_deployment.py https://alcohol-label-verifier-bhte.onrender.com` to repeat the verified health, page, sample, and real OCR upload checks. Render's free services sleep after inactivity, so the first request can take about a minute; deployed timings are separate from the local benchmark.
 
 ## Optional Azure deployment
 
@@ -85,7 +91,7 @@ An Azure subscription is required; none is configured yet. The included Dockerfi
 2. Validate Tesseract parity and deploy to Azure; measure warm and cold end-to-end p50/p95.
 3. Add a batch queue with a CSV application manifest and per-application image association.
 4. Broaden font recognition and body-style coverage, add paragraph-layout checks, and accept reliable artwork dimensions for physical text-size verification.
-5. Complete GitHub publication and Render verification; include both URLs in the submission.
+5. Measure representative warm/cold latency and improve performance on the deployed service; GitHub publication and initial Render verification are complete.
 
 ## References
 
