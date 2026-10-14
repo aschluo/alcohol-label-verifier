@@ -1,0 +1,30 @@
+[
+  {
+    "id": "prosecco_photo",
+    "title": "Real bottle photo — Prosecco",
+    "description": "Readable fields should match independently of the poorly read warning. These are illustrative comparison values, not an actual COLA application.",
+    "image": "prosecco_photo.jpg",
+    "application": {
+      "brand": "PROSECCO",
+      "class_type": "Italian Sparkling Wine",
+      "abv": "11",
+      "net_contents": "750 mL",
+      "producer": "Mionetto Spa",
+      "address": "Valdobbiadene",
+      "imported": true,
+      "country": "Italy"
+    },
+    "expected_status": "needs_review",
+    "expected_checks": {
+      "brand": "matches",
+      "class_type": "matches",
+      "abv": "matches",
+      "net_contents": "matches",
+      "producer": "matches",
+      "address": "matches",
+      "country": "matches",
+      "warning_text": "needs_review"
+    },
+    "provenance": "User-supplied online bottle photo. Source webpage not provided."
+  }
+]

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Label Check — Alcohol label review</title>
+  <link rel="stylesheet" href="/static/styles.css"><script src="/static/app.js" defer></script>
+</head>
+<body>
+  <header><div class="wordmark"><span class="logo" aria-hidden="true">✓</span> Label Check</div><span class="prototype">Review assistant · Prototype</span></header>
+  <main>
+    <div class="intro"><p class="eyebrow">ALCOHOL LABEL VERIFICATION</p><h1>A clearer way to check a label.</h1><p>Compare the label with the application. See what matches and what needs a closer look.</p></div>
+    <div class="workspace">
+      <section class="card" aria-labelledby="upload-title">
+        <h2 id="upload-title"><span class="step">1</span> Add the label</h2>
+        <p>Upload the front and back for <strong>one application</strong>. Choose up to 6 images.</p>
+        <label class="upload-zone" for="images"><span class="upload-icon" aria-hidden="true">↑</span><strong>Choose label images</strong><span>JPG, PNG or WebP · up to 10 MB each</span></label>
+        <input id="images" type="file" accept="image/jpeg,image/png,image/webp" multiple class="file-input">
+        <label class="camera-button" for="camera">Take a photo</label><input id="camera" type="file" accept="image/*" capture="environment" class="file-input">
+        <p id="file-status" class="muted" aria-live="polite">No images selected.</p>
+        <div id="previews" class="previews"></div>
+        <div class="sample-picker"><label for="sample">Or try a prepared test label</label><select id="sample"><option value="">Choose a test case…</option></select><p id="sample-description" class="muted"></p></div>
+      </section>
+      <section class="card" aria-labelledby="fields-title">
+        <h2 id="fields-title"><span class="step">2</span> Enter application information</h2>
+        <p>Use the values submitted in the application.</p>
+        <form id="application">
+          <div class="fields">
+            <label>Brand name<input name="brand" required placeholder="e.g. Old Tom Distillery" maxlength="500"></label>
+            <label>Class / type<input name="class_type" required placeholder="e.g. Kentucky Straight Bourbon Whiskey" maxlength="500"></label>
+            <label>Alcohol content (% ABV)<input name="abv" required type="number" min="0" max="100" step="0.01" placeholder="45"></label>
+            <label>Net contents<input name="net_contents" required placeholder="750 mL" maxlength="500"></label>
+            <label>Producer / bottler<input name="producer" required placeholder="Company name" maxlength="500"></label>
+            <label>Producer address<input name="address" required placeholder="City, state or full address" maxlength="500"></label>
+          </div>
+          <label class="checkbox"><input name="imported" type="checkbox"> This is an imported product</label>
+          <label id="country-field" hidden>Country of origin<input name="country" placeholder="e.g. France" maxlength="500"></label>
+          <button id="check-button" type="submit" class="primary">Check label <span aria-hidden="true">→</span></button>
+          <p class="muted">Your images are used for this check and are not saved by the app.</p>
+        </form>
+      </section>
+    </div>
+    <p id="progress" role="status" aria-live="polite"></p><div id="error" role="alert" hidden></div>
+    <section id="results" class="card result-section" hidden tabindex="-1" aria-labelledby="result-title">
+      <div class="result-header"><div><p class="eyebrow">REVIEW RESULTS</p><h2 id="result-title"></h2></div><span id="timing" class="timing"></span></div>
+      <p id="result-description"></p><div id="checks"></div>
+      <details><summary>See the text read from the label</summary><pre id="extracted"></pre></details>
+      <details id="reread-details" hidden><summary>See targeted second-read evidence</summary><pre id="reread-text"></pre></details>
+      <details id="warning-details"><summary>See warning text differences</summary><pre id="warning-diff"></pre></details>
+      <button id="download" class="secondary">Download review report</button>
+    </section>
+    <footer>Designed to support a human reviewer. A text match does not establish full TTB compliance.<br><a href="https://www.ttb.gov/regulated-commodities/beverage-alcohol/distilled-spirits/ds-labeling-home/ds-health-warning" target="_blank" rel="noopener">TTB health warning requirements</a></footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: alcohol-label-verifier
+    runtime: docker
+    plan: free
+    region: virginia
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    envVars:
+      - key: OCR_PROVIDER
+        value: tesseract
+      - key: OMP_THREAD_LIMIT
+        value: "1"
